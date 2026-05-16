@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}提交简历{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="mb-8">
+        <a href="/job/input?method=text" class="text-sm text-gray-400 hover:text-gray-600">&larr; 重新选择职位</a>
+        <h1 class="text-2xl font-bold text-gray-800 mt-2">提交简历</h1>
+    </div>
+
+    {% if job %}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6">
+        <div class="flex items-start justify-between">
+            <div>
+                <h2 class="text-lg font-semibold text-gray-800">{{ job.position or "职位" }}</h2>
+                <p class="text-sm text-gray-500">
+                    {% if job.company_name %}{{ job.company_name }} · {% endif %}
+                    {% if job.salary_range %}{{ job.salary_range }}{% endif %}
+                </p>
+            </div>
+            <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded-full">
+                {% if job.source_type == 'text' %}文本输入{% else %}截图识别{% endif %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+
+    <form id="resumeForm"
+          action="/api/resumes" method="POST"
+          enctype="multipart/form-data"
+          class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6">
+
+        <input type="hidden" name="job_id" value="{{ job.id if job else '' }}">
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-3">选择方式</label>
+            <div class="grid grid-cols-2 gap-3" id="modeSelector">
+                <label class="border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-gray-300 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50"
+                       for="modeUpload">
+                    <input type="radio" name="source_type" id="modeUpload" value="upload" checked
+                           class="hidden"
+                           onchange="document.getElementById('uploadSection').classList.remove('hidden'); document.getElementById('generateSection').classList.add('hidden')">
+                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400 has-[:checked]:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                    </svg>
+                    <p class="text-xs font-medium text-gray-500">上传已有简历</p>
+                </label>
+                <label class="border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-gray-300 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50"
+                       for="modeGenerate">
+                    <input type="radio" name="source_type" id="modeGenerate" value="generate"
+                           class="hidden"
+                           onchange="document.getElementById('generateSection').classList.remove('hidden'); document.getElementById('uploadSection').classList.add('hidden')">
+                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <p class="text-xs font-medium text-gray-500">AI 从零生成</p>
+                </label>
+            </div>
+        </div>
+
+        <div id="uploadSection">
+            <label class="block text-sm font-medium text-gray-700 mb-2">上传简历文件</label>
+            <div class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer"
+                 onclick="document.getElementById('fileInput').click()">
+                <div id="filePlaceholder">
+                    <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                    <p class="text-gray-400 text-sm">点击或拖拽上传简历</p>
+                    <p class="text-gray-300 text-xs mt-1">支持 PDF、DOCX、TXT</p>
+                </div>
+                <div id="fileSelected" class="hidden items-center justify-center gap-2">
+                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span id="fileNameDisplay" class="text-gray-600 text-sm"></span>
+                </div>
+            </div>
+            <input type="file" name="resume_file" id="fileInput" accept=".pdf,.docx,.txt"
+                   class="hidden"
+                   onchange="var name=this.files[0]&&this.files[0].name;if(name){document.getElementById('filePlaceholder').classList.add('hidden');var sel=document.getElementById('fileSelected');sel.classList.remove('hidden');sel.classList.add('flex');document.getElementById('fileNameDisplay').textContent=name}">
+        </div>
+
+        <div id="generateSection" class="hidden">
+            <label class="block text-sm font-medium text-gray-700 mb-2">填写你的背景信息</label>
+            <textarea name="background" rows="8"
+                      class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-y"
+                      placeholder="请简要描述你的工作背景，例如：&#10;1. 工作年限和当前职位&#10;2. 掌握的核心技能（编程语言、工具、框架等）&#10;3. 教育背景&#10;4. 主要项目经历或工作成就&#10;5. 目标薪资期望（可选）"></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-xl transition-colors">
+            开始处理
+        </button>
+    </form>
+
+    <!-- 加载弹窗 -->
+    <div id="loadingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+        <div class="relative bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 text-center">
+            <div class="inline-block w-10 h-10 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin mb-4"></div>
+            <p class="text-gray-700 font-medium">AI 正在为你优化简历</p>
+            <p class="text-gray-400 text-sm mt-1">请耐心等待，这可能需要一些时间...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('resumeForm').addEventListener('submit', function() {
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').classList.add('opacity-50');
+    document.getElementById('loadingModal').classList.remove('hidden');
+});
+</script>
+{% endblock %}

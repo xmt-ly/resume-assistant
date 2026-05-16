@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}简历助手{% endblock %}</title>
+    <script src="/static/js/tailwind.min.js"></script>
+    <link rel="stylesheet" href="/static/css/app.css">
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-14 items-center">
+                <a href="/" class="flex items-center gap-2">
+                    <span class="text-xl font-bold text-gray-800">简历助手</span>
+                    <span class="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded">Resume Assistant</span>
+                </a>
+                <div class="text-xs text-gray-400">
+                    {% if session_id %}
+                    <span>会话: {{ session_id[:8] }}...</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <div id="toast" class="fixed top-4 right-4 z-50 hidden">
+        <div id="toastContent" class="px-4 py-3 rounded-lg shadow-lg text-white text-sm">消息</div>
+    </div>
+
+    <script>
+    window.showToast = function(msg, type) {
+        var toast = document.getElementById('toast');
+        var content = document.getElementById('toastContent');
+        if (!toast || !content) return;
+        content.textContent = msg;
+        content.className = 'px-4 py-3 rounded-lg shadow-lg text-white text-sm';
+        if (type === 'success') content.classList.add('bg-green-500');
+        else if (type === 'error') content.classList.add('bg-red-500');
+        else content.classList.add('bg-blue-500');
+        toast.classList.remove('hidden');
+        if (window._toastTimer) clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(function() { toast.classList.add('hidden'); }, 4000);
+    };
+    </script>
+    <script src="/static/js/app.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

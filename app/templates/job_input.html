@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}输入职位信息{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="mb-8">
+        <a href="/" class="text-sm text-gray-400 hover:text-gray-600">&larr; 返回</a>
+        <h1 class="text-2xl font-bold text-gray-800 mt-2">
+            {% if method == 'text' %}粘贴招聘要求{% else %}上传招聘截图{% endif %}
+        </h1>
+        <p class="text-gray-500 text-sm mt-1">
+            {% if method == 'text' %}
+            从 Boss 直聘复制职位描述，粘贴到下方文本框中
+            {% else %}
+            截取 Boss 直聘 App 或网页中的招聘信息，上传截图
+            {% endif %}
+        </p>
+    </div>
+
+    <form id="jobForm"
+          action="/api/jobs" method="POST"
+          enctype="multipart/form-data"
+          class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+
+        <input type="hidden" name="method" value="{{ method }}">
+
+        {% if method == 'text' %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">招聘要求文本</label>
+            <textarea name="text" rows="12"
+                      class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-y"
+                      placeholder="请粘贴 Boss 直聘上的职位描述..."></textarea>
+        </div>
+        {% else %}
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">上传截图</label>
+            <div class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer"
+                 onclick="document.getElementById('screenshotInput').click()">
+                <div id="screenshotPlaceholder">
+                    <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                    </svg>
+                    <p class="text-gray-400 text-sm">点击或拖拽上传截图</p>
+                    <p class="text-gray-300 text-xs mt-1">支持 PNG、JPG，最大 10MB</p>
+                </div>
+                <div id="screenshotPreview" class="hidden relative">
+                    <img id="previewImg" class="max-h-80 mx-auto rounded-lg shadow-sm">
+                    <button type="button" onclick="clearScreenshot()"
+                            class="absolute top-2 right-2 bg-red-500 text-white w-7 h-7 rounded-full text-xs hover:bg-red-600">✕</button>
+                </div>
+            </div>
+            <input type="file" name="screenshot" id="screenshotInput" accept="image/png,image/jpeg,image/jpg,image/webp"
+                   class="hidden"
+                   onchange="previewScreenshot(this)">
+        </div>
+        {% endif %}
+
+        <button type="submit" id="submitBtn"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-xl transition-colors">
+            {% if method == 'text' %}开始分析{% else %}上传并分析{% endif %}
+        </button>
+    </form>
+
+    <div id="loading" class="hidden mt-6 text-center py-10">
+        <div class="inline-block w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+        <p class="text-gray-500 text-sm mt-3">正在分析招聘信息...</p>
+    </div>
+</div>
+
+<script>
+function previewScreenshot(input) {
+    var file = input.files && input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('screenshotPlaceholder').classList.add('hidden');
+        var preview = document.getElementById('screenshotPreview');
+        preview.classList.remove('hidden');
+        document.getElementById('previewImg').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+function clearScreenshot() {
+    document.getElementById('screenshotInput').value = '';
+    document.getElementById('screenshotPreview').classList.add('hidden');
+    document.getElementById('screenshotPlaceholder').classList.remove('hidden');
+}
+document.getElementById('jobForm').addEventListener('submit', function() {
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').classList.add('opacity-50');
+    document.getElementById('loading').classList.remove('hidden');
+});
+</script>
+{% endblock %}
