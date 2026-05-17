@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}注册 - 智汇简历助手{% endblock %}
+
+{% block navbar %}
+<!-- Minimal Header for Auth Pages -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+    <div class="flex items-center gap-2">
+        <a href="/" class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</a>
+    </div>
+    <div class="flex items-center gap-4">
+        <a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="/auth/login">已有账号？去登录</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<main class="min-h-screen flex items-center justify-center pt-16 px-margin-mobile">
+    <!-- Background Decorative Elements -->
+    <div class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute -top-[10%] -right-[5%] w-[40%] h-[40%] bg-secondary-container/20 rounded-full blur-[120px]"></div>
+        <div class="absolute -bottom-[10%] -left-[5%] w-[30%] h-[30%] bg-primary-fixed/30 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Registration Card Container -->
+    <div class="w-full max-w-[480px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.03)] p-8 md:p-10 relative">
+        <!-- Branding/Heading -->
+        <div class="text-center mb-8">
+            <h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">开启职场新篇章</h1>
+            <p class="font-body-md text-body-md text-on-surface-variant">加入数千名职场精英，体验 AI 智能求助</p>
+        </div>
+
+        <!-- Error Message -->
+        {% if error %}
+        <p class="text-error text-body-sm mb-4">{{ error }}</p>
+        {% endif %}
+
+        <!-- Form Content -->
+        <form action="/auth/register" method="POST" class="space-y-5">
+            <!-- Phone Field -->
+            <div class="space-y-2">
+                <label class="font-label-md text-label-md text-on-surface-variant ml-1" for="phone">手机号</label>
+                <div class="relative group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">smartphone</span>
+                    <input id="phone" name="phone" class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="请输入手机号码" type="tel"/>
+                </div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="space-y-2">
+                <label class="font-label-md text-label-md text-on-surface-variant ml-1" for="email">邮箱</label>
+                <div class="relative group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
+                    <input id="email" name="email" class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="请输入邮箱地址" type="email"/>
+                </div>
+            </div>
+
+            <!-- Hint -->
+            <p class="text-label-sm text-outline -mt-2 ml-1">手机号和邮箱至少填写一项</p>
+
+            <!-- Password Field -->
+            <div class="space-y-2">
+                <label class="font-label-md text-label-md text-on-surface-variant ml-1" for="password">设置密码</label>
+                <div class="relative group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+                    <input id="password" name="password" class="w-full pl-10 pr-10 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="建议使用字母、数字及符号组合" type="password"/>
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface toggle-password" type="button">
+                        <span class="material-symbols-outlined">visibility_off</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="space-y-2">
+                <label class="font-label-md text-label-md text-on-surface-variant ml-1" for="confirm_password">确认密码</label>
+                <div class="relative group">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock_reset</span>
+                    <input id="confirm_password" name="confirm_password" class="w-full pl-10 pr-10 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="请再次输入密码" type="password"/>
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface toggle-password" type="button">
+                        <span class="material-symbols-outlined">visibility_off</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Agreement Checkbox -->
+            <div class="flex items-start gap-3 py-2">
+                <input class="mt-1 w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary transition-all" id="agreement" type="checkbox"/>
+                <label class="font-body-sm text-body-sm text-on-surface-variant leading-tight" for="agreement">
+                    我已阅读并同意 <a class="text-primary hover:underline" href="#">用户协议</a> 与 <a class="text-primary hover:underline" href="#">隐私政策</a>
+                </label>
+            </div>
+
+            <!-- Action Button -->
+            <button class="w-full py-4 bg-primary text-on-primary font-headline-md text-headline-md rounded-xl hover:bg-primary-container transition-all active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-lg" type="submit">
+                <span class="material-symbols-outlined">person_add</span>
+                提交注册
+            </button>
+        </form>
+
+        <!-- Social Login / Alternative -->
+        <div class="mt-8">
+            <div class="relative flex items-center justify-center mb-6">
+                <div class="border-t border-outline-variant w-full"></div>
+                <span class="absolute px-4 bg-surface-container-lowest font-body-sm text-body-sm text-outline">其他注册方式</span>
+            </div>
+            <div class="flex justify-center gap-6">
+                <button class="w-12 h-12 flex items-center justify-center rounded-full border border-outline-variant hover:bg-surface-container transition-colors" type="button">
+                    <img alt="微信" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBggApn19xvlIn2mHg4OBZHCvuKdTo6Vymz9cZPXIfT04MV0Smi_vzb1Drvk0h_0W458SksL22ilWUqZHaBXb17T_38ZeU01EG1lJ8eaNY5wwhDHJ_8wlQCXvORGRbVHQT5DnxTRw178KGyVibMJegzOPBdwGw0GcVHwWR69UManY7S3I8E-Bmd9RSgOgvYrZXGr3cw-92Y-i_GgdY8nQi53vC0n7UkcIckQY_erJCRxdi2sOUACJLNoD7h9PSIhXBvu7dag-HVUNYY"/>
+                </button>
+                <button class="w-12 h-12 flex items-center justify-center rounded-full border border-outline-variant hover:bg-surface-container transition-colors" type="button">
+                    <img alt="GitHub" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUz2IhDuLhRBgzwBnByiAFoXr0EN0wqIh8Q0dx6tdK7RGn_foVHt9P7EoDghR3xTxKXHyHT3tAga9avjiRpAJtztJMi50n-Ffh_FnR_VI9y3manfAiZ58YDwcfbAqsVWpKqXKYZrRkhwDOnPyrC7z-mpvBRNC8Lah8Tg_2ZxeNgg6pcETRJ9Vf0X-9Ww1ojWreQtGbpDnTkT3tSugIqzFwlFF7prr4ML20bNAWDq-eQS5gwqPLE5RGYE661Baitoyl4GPquV6GRxjO"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.toggle-password').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var input = this.closest('.relative').querySelector('input');
+        var icon = this.querySelector('.material-symbols-outlined');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility';
+        } else {
+            input.type = 'password';
+            icon.textContent = 'visibility_off';
+        }
+    });
+});
+</script>
+{% endblock %}

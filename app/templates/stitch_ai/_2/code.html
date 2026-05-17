@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>注册 - 智汇简历助手</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#264191",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#dce1ff",
+                    "on-tertiary-fixed": "#25005a",
+                    "tertiary-fixed-dim": "#d2bbff",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "surface-container-highest": "#e0e3e5",
+                    "outline-variant": "#c5c5d3",
+                    "primary-container": "#1e3a8a",
+                    "primary": "#00236f",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary-container": "#006f66",
+                    "error": "#ba1a1a",
+                    "surface": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "on-background": "#191c1e",
+                    "tertiary-container": "#5200b5",
+                    "on-surface-variant": "#444651",
+                    "surface-container": "#eceef0",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006a61",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed": "#00164e",
+                    "secondary-container": "#86f2e4",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#89f5e7",
+                    "on-tertiary-fixed-variant": "#5a00c6",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary-container": "#bc9bff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#eaddff",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "on-secondary-fixed": "#00201d",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-primary": "#b6c4ff",
+                    "surface-container-high": "#e6e8ea",
+                    "background": "#f7f9fb",
+                    "tertiary": "#37007e",
+                    "on-primary-container": "#90a8ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#757682",
+                    "surface-tint": "#4059aa"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Noto Sans SC"],
+                    "headline-lg-mobile": ["Noto Sans SC"],
+                    "body-md": ["Noto Sans SC"],
+                    "headline-md": ["Noto Sans SC"],
+                    "label-md": ["Inter"],
+                    "body-sm": ["Noto Sans SC"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Noto Sans SC"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(0, 106, 97, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-primary-fixed">
+<!-- TopNavBar (Shell Visible Suppression Rule: Transactional Page - TopNavBar is typically reduced to just logo or hidden. Here we keep a minimalist version for brand identity as per context) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</span>
+</div>
+<div class="flex items-center gap-4">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">已有账号？去登录</a>
+</div>
+</header>
+<main class="min-h-screen flex items-center justify-center pt-16 px-margin-mobile">
+<!-- Background Decorative Elements -->
+<div class="absolute inset-0 overflow-hidden -z-10 pointer-events-none">
+<div class="absolute -top-[10%] -right-[5%] w-[40%] h-[40%] bg-secondary-container/20 rounded-full blur-[120px]"></div>
+<div class="absolute -bottom-[10%] -left-[5%] w-[30%] h-[30%] bg-primary-fixed/30 rounded-full blur-[100px]"></div>
+</div>
+<!-- Registration Card Container -->
+<div class="w-full max-w-[480px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.03)] p-8 md:p-10 relative">
+<!-- Branding/Heading -->
+<div class="text-center mb-8">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">开启职场新篇章</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">加入数千名职场精英，体验 AI 智能求助</p>
+</div>
+<!-- Form Content -->
+<form class="space-y-5" onsubmit="return false;">
+<!-- Phone Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">手机号</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">smartphone</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="请输入您的手机号码" type="tel"/>
+</div>
+</div>
+<!-- Verification Code Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">验证码</label>
+<div class="flex gap-3">
+<div class="relative flex-1 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">verified_user</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="请输入验证码" type="text"/>
+</div>
+<button class="px-4 font-label-md text-label-md text-primary bg-primary-fixed hover:bg-primary-fixed-dim transition-colors rounded-lg whitespace-nowrap active:scale-95 duration-150" type="button">
+                            获取验证码
+                        </button>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">设置密码</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full pl-10 pr-10 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="建议使用字母、数字及符号组合" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Confirm Password Field -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface-variant ml-1">确认密码</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock_reset</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-outline/60" placeholder="请再次输入密码" type="password"/>
+</div>
+</div>
+<!-- Agreement Checkbox -->
+<div class="flex items-start gap-3 py-2">
+<input class="mt-1 w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary transition-all" id="agreement" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface-variant leading-tight" for="agreement">
+                        我已阅读并同意 <a class="text-primary hover:underline" href="#">用户协议</a> 与 <a class="text-primary hover:underline" href="#">隐私政策</a>
+</label>
+</div>
+<!-- Action Button -->
+<button class="w-full py-4 bg-primary text-on-primary font-headline-md text-headline-md rounded-xl hover:bg-primary-container transition-all active:scale-[0.98] duration-150 flex items-center justify-center gap-2 shadow-lg" type="submit">
+<span class="material-symbols-outlined">person_add</span>
+                    提交注册
+                </button>
+</form>
+<!-- Social Login / Alternative -->
+<div class="mt-8">
+<div class="relative flex items-center justify-center mb-6">
+<div class="border-t border-outline-variant w-full"></div>
+<span class="absolute px-4 bg-surface-container-lowest font-body-sm text-body-sm text-outline">其他注册方式</span>
+</div>
+<div class="flex justify-center gap-6">
+<button class="w-12 h-12 flex items-center justify-center rounded-full border border-outline-variant hover:bg-surface-container transition-colors">
+<img alt="WeChat" class="w-6 h-6" data-alt="A clean, flat icon for the WeChat application, rendered in its signature green and white colors, set against a simple, minimalist background in a modern UI style. The lighting is bright and even, highlighting the professional digital tool aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBggApn19xvlIn2mHg4OBZHCvuKdTo6Vymz9cZPXIfT04MV0Smi_vzb1Drvk0h_0W458SksL22ilWUqZHaBXb17T_38ZeU01EG1lJ8eaNY5wwhDHJ_8wlQCXvORGRbVHQT5DnxTRw178KGyVibMJegzOPBdwGw0GcVHwWR69UManY7S3I8E-Bmd9RSgOgvYrZXGr3cw-92Y-i_GgdY8nQi53vC0n7UkcIckQY_erJCRxdi2sOUACJLNoD7h9PSIhXBvu7dag-HVUNYY"/>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full border border-outline-variant hover:bg-surface-container transition-colors">
+<img alt="GitHub" class="w-6 h-6" data-alt="A sleek, black-and-white GitHub octocat icon represented with sharp edges and professional styling, suitable for a tech-focused modern corporate UI. The aesthetic is clean and high-contrast, following a minimalist and intelligent design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUz2IhDuLhRBgzwBnByiAFoXr0EN0wqIh8Q0dx6tdK7RGn_foVHt9P7EoDghR3xTxKXHyHT3tAga9avjiRpAJtztJMi50n-Ffh_FnR_VI9y3manfAiZ58YDwcfbAqsVWpKqXKYZrRkhwDOnPyrC7z-mpvBRNC8Lah8Tg_2ZxeNgg6pcETRJ9Vf0X-9Ww1ojWreQtGbpDnTkT3tSugIqzFwlFF7prr4ML20bNAWDq-eQS5gwqPLE5RGYE661Baitoyl4GPquV6GRxjO"/>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Standard) -->
+<footer class="w-full py-12 px-margin-mobile md:px-margin-desktop flex flex-col items-center gap-6 bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex gap-8 flex-wrap justify-center">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">服务条款</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">隐私政策</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">联系支持</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">常见问题</a>
+</div>
+<div class="text-center font-body-sm text-body-sm text-on-surface-variant">
+            © 2024 智汇简历助手 | 智能驱动 职场领先
+        </div>
+</footer>
+</body></html>

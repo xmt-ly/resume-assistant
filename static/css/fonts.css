@@ -1,0 +1,78 @@
+/* ============================================
+   Font Declarations — 简历助手
+   All fonts loaded locally or from system fallbacks
+   ============================================ */
+
+/* Inter — local files */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/static/fonts/inter-400.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/static/fonts/inter-500.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/static/fonts/inter-600.ttf') format('truetype');
+}
+
+/* Material Symbols Outlined — local file */
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url('/static/icons/material-symbols-outlined.ttf') format('truetype');
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Noto Sans SC — system font fallback */
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Noto Sans SC'), local('Microsoft YaHei'), local('PingFang SC'), local('Hiragino Sans GB');
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: local('Noto Sans SC Medium'), local('Microsoft YaHei'), local('PingFang SC'), local('Hiragino Sans GB');
+}
+
+@font-face {
+    font-family: 'Noto Sans SC';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local('Noto Sans SC Bold'), local('Microsoft YaHei Bold'), local('PingFang SC Bold'), local('Hiragino Sans GB Bold');
+}

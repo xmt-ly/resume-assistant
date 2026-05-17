@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models import Resume, JobPosting, SkillGap
+from app.models import Resume, JobPosting, User
 
 router = APIRouter()
 
@@ -21,27 +21,41 @@ def get_session_id(request: Request) -> str:
     return request.session["session_id"]
 
 
+def get_current_user(request: Request) -> User | None:
+    user_id = request.session.get("user_id")
+    if not user_id:
+        return None
+    db: Session = next(get_db())
+    try:
+        return db.query(User).filter(User.id == user_id).first()
+    finally:
+        db.close()
+
+
 @router.get("/")
 async def index(request: Request):
     session_id = get_session_id(request)
+    user = get_current_user(request)
     templates = get_templates(request)
-    return templates.TemplateResponse(request, "index.html", {"session_id": session_id})
+    return templates.TemplateResponse(request, "index.html", {"session_id": session_id, "user": user})
 
 
 @router.get("/job/input")
 async def job_input(request: Request, method: str = "text"):
     session_id = get_session_id(request)
+    user = get_current_user(request)
     templates = get_templates(request)
     return templates.TemplateResponse(
         request,
         "job_input.html",
-        {"session_id": session_id, "method": method},
+        {"session_id": session_id, "user": user, "method": method},
     )
 
 
 @router.get("/resume/input")
 async def resume_input(request: Request, job_id: int):
     session_id = get_session_id(request)
+    user = get_current_user(request)
     templates = get_templates(request)
 
     db: Session = next(get_db())
@@ -54,13 +68,14 @@ async def resume_input(request: Request, job_id: int):
     return templates.TemplateResponse(
         request,
         "resume_input.html",
-        {"session_id": session_id, "job": job},
+        {"session_id": session_id, "user": user, "job": job},
     )
 
 
 @router.get("/resume/preview/{resume_id}")
 async def resume_preview(request: Request, resume_id: int):
     session_id = get_session_id(request)
+    user = get_current_user(request)
     templates = get_templates(request)
 
     db: Session = next(get_db())
@@ -73,13 +88,14 @@ async def resume_preview(request: Request, resume_id: int):
     return templates.TemplateResponse(
         request,
         "preview.html",
-        {"session_id": session_id, "resume": resume},
+        {"session_id": session_id, "user": user, "resume": resume},
     )
 
 
 @router.get("/analysis/{resume_id}")
 async def analysis_page(request: Request, resume_id: int):
     session_id = get_session_id(request)
+    user = get_current_user(request)
     templates = get_templates(request)
 
     db: Session = next(get_db())
@@ -92,5 +108,5 @@ async def analysis_page(request: Request, resume_id: int):
     return templates.TemplateResponse(
         request,
         "analysis.html",
-        {"session_id": session_id, "resume": resume},
+        {"session_id": session_id, "user": user, "resume": resume},
     )

@@ -11,6 +11,17 @@ def generate_uuid():
     return str(uuid.uuid4())
 
 
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String(50), unique=True, nullable=False)
+    phone = Column(String(20), unique=True, nullable=True)
+    email = Column(String(120), unique=True, nullable=True)
+    password_hash = Column(String(128), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
 class Session(Base):
     __tablename__ = "sessions"
 

@@ -16,8 +16,8 @@ uploads/resumes/
 # Data
 data/
 
-# Fonts
-fonts/
+# Fonts (root-level only, static/fonts/ is needed)
+/fonts/
 
 # Claude Code local settings
 .claude/settings.local.json

@@ -1,40 +1,137 @@
 {% extends "base.html" %}
-{% block title %}简历助手 - 开始{% endblock %}
+{% block title %}智汇简历助手 - 首页{% endblock %}
+
 {% block content %}
-<div class="py-12" x-data>
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">让你的简历脱颖而出</h1>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto">
-            粘贴 Boss 直聘的招聘要求或上传截图，AI 帮你生成高度匹配的简历和技能提升建议
-        </p>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-        <a href="/job/input?method=text"
-           class="group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-blue-200">
-            <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                </svg>
+<main class="pt-16">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-white to-surface py-20 md:py-32">
+        <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-sm">
+                    <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                    AI 智能驱动
+                </div>
+                <h1 class="font-headline-lg text-headline-lg md:text-[56px] leading-tight text-primary">
+                    AI 赋能，让简历更有竞争力
+                </h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                    通过职位描述自动优化简历，提升面试邀约率。我们利用先进的 AI 技术分析岗位需求，为您量身定制最契合的求职表达。
+                </p>
+                <!-- Choice Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                    <a href="/job/input?method=text" class="group cursor-pointer p-6 bg-surface-container-lowest border border-outline-variant rounded-xl hover:border-primary hover:shadow-lg transition-all active:scale-[0.98]">
+                        <div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-on-primary transition-colors">
+                            <span class="material-symbols-outlined">content_paste</span>
+                        </div>
+                        <h3 class="font-headline-md text-headline-md mb-2">粘贴职位文本</h3>
+                        <p class="text-body-sm text-on-surface-variant">直接粘贴职位描述文字，快速开始 AI 优化流程。</p>
+                    </a>
+                    <a href="/job/input?method=screenshot" class="group cursor-pointer p-6 bg-surface-container-lowest border border-outline-variant rounded-xl hover:border-secondary hover:shadow-lg transition-all active:scale-[0.98]">
+                        <div class="w-12 h-12 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary mb-4 group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+                            <span class="material-symbols-outlined">screenshot_region</span>
+                        </div>
+                        <h3 class="font-headline-md text-headline-md mb-2">上传职位截图</h3>
+                        <p class="text-body-sm text-on-surface-variant">上传招聘页截图，AI 自动提取关键要求并匹配简历。</p>
+                    </a>
+                </div>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800 mb-2">粘贴文本</h2>
-            <p class="text-gray-500 text-sm leading-relaxed">
-                直接复制 Boss 直聘上的职位描述，粘贴到文本框中即可快速分析
-            </p>
-        </a>
-
-        <a href="/job/input?method=screenshot"
-           class="group relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-blue-200">
-            <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                <svg class="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
+            <!-- Decorative Resume Mockup -->
+            <div class="lg:col-span-5 relative hidden lg:block">
+                <div class="paper-canvas bg-white shadow-2xl rounded-sm border border-outline-variant p-8 relative overflow-hidden">
+                    <div class="w-full h-4 bg-surface-container mb-8"></div>
+                    <div class="flex gap-4 mb-10">
+                        <div class="w-20 h-20 bg-surface-container rounded-sm"></div>
+                        <div class="flex-1 space-y-3">
+                            <div class="w-3/4 h-3 bg-surface-container"></div>
+                            <div class="w-1/2 h-3 bg-surface-container"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="w-full h-2 bg-surface-container"></div>
+                        <div class="w-full h-2 bg-surface-container"></div>
+                        <div class="w-4/5 h-2 bg-surface-container"></div>
+                    </div>
+                    <!-- AI Insight Overlay -->
+                    <div class="absolute bottom-10 right-0 left-0 px-6">
+                        <div class="bg-white p-4 rounded-xl ai-glow border border-secondary/20 flex flex-col gap-3">
+                            <div class="flex items-center gap-2 text-secondary font-label-md">
+                                <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                                AI 优化建议
+                            </div>
+                            <p class="text-body-sm text-on-surface-variant">检测到职位需求中的 "分布式架构"，建议在工作经历中加强相关描述。</p>
+                            <div class="w-full py-2 bg-gradient-to-r from-secondary to-primary text-on-primary rounded-lg text-label-md text-center">
+                                一键应用优化
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h2 class="text-xl font-semibold text-gray-800 mb-2">上传截图</h2>
-            <p class="text-gray-500 text-sm leading-relaxed">
-                截取 Boss 直聘 App 或网页中的招聘信息截图，AI 自动识别文字并分析
-            </p>
-        </a>
-    </div>
-</div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-24 bg-surface">
+        <div class="max-w-container-max mx-auto px-margin-desktop">
+            <div class="text-center mb-16">
+                <h2 class="font-headline-lg text-headline-lg text-primary mb-4">为什么选择智汇简历助手？</h2>
+                <p class="text-on-surface-variant">领先的求职智能化工具，为您打造职场竞争优势</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-surface-container-lowest p-10 rounded-2xl flex flex-col items-center text-center group hover:-translate-y-2 transition-transform shadow-sm">
+                    <div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-6">
+                        <span class="material-symbols-outlined text-4xl">hub</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md mb-4 text-primary">智能匹配</h3>
+                    <p class="text-body-md text-on-surface-variant">精准提取职位 JD 中的核心关键词，确保您的简历能被企业系统的简历筛选器（ATS）高效识别。</p>
+                </div>
+                <div class="bg-surface-container-lowest p-10 rounded-2xl flex flex-col items-center text-center group hover:-translate-y-2 transition-transform shadow-sm">
+                    <div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary mb-6">
+                        <span class="material-symbols-outlined text-4xl">analytics</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md mb-4 text-primary">技能分析</h3>
+                    <p class="text-body-md text-on-surface-variant">对比您的技能树与职位需求的重合度，可视化分析能力优势与薄弱环节，给出针对性修饰建议。</p>
+                </div>
+                <div class="bg-surface-container-lowest p-10 rounded-2xl flex flex-col items-center text-center group hover:-translate-y-2 transition-transform shadow-sm">
+                    <div class="w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary mb-6">
+                        <span class="material-symbols-outlined text-4xl">bolt</span>
+                    </div>
+                    <h3 class="font-headline-md text-headline-md mb-4 text-primary">快速生成</h3>
+                    <p class="text-body-md text-on-surface-variant">无需手动苦思冥想描述词。AI 实时生成符合行业语境的专业工作内容，3分钟完成高水准简历。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid Feature Highlight -->
+    <section class="py-24">
+        <div class="max-w-container-max mx-auto px-margin-desktop">
+            <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
+                <div class="md:col-span-2 md:row-span-2 bg-primary-container text-on-primary-container rounded-3xl p-10 relative overflow-hidden flex flex-col justify-end">
+                    <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-primary/20 to-transparent"></div>
+                    <div class="relative z-10">
+                        <h3 class="font-headline-lg text-headline-lg mb-4 text-white">针对性简历润色</h3>
+                        <p class="text-body-lg opacity-90">基于您投递的具体职位，由 AI 提供动态的润色方案，让简历像拼图一样完美嵌入职位空缺。</p>
+                    </div>
+                </div>
+                <div class="md:col-span-2 bg-secondary-container text-on-secondary-container rounded-3xl p-8 flex items-center gap-6">
+                    <div class="flex-1">
+                        <h4 class="font-headline-md text-headline-md mb-2">多模态识别</h4>
+                        <p class="text-body-sm opacity-90">支持文本、图片、PDF 等多种格式解析，打破招聘信息格式壁垒。</p>
+                    </div>
+                    <span class="material-symbols-outlined text-6xl text-secondary opacity-50">visibility</span>
+                </div>
+                <div class="md:col-span-1 bg-surface-container-high rounded-3xl p-8 flex flex-col justify-between">
+                    <span class="material-symbols-outlined text-4xl text-primary">security</span>
+                    <h4 class="font-headline-md text-headline-md mt-4">隐私安全</h4>
+                    <p class="text-body-sm text-on-surface-variant">金融级数据加密，保护您的个人职业信息不外泄。</p>
+                </div>
+                <div class="md:col-span-1 bg-surface-container-high rounded-3xl p-8 flex flex-col justify-between">
+                    <span class="material-symbols-outlined text-4xl text-primary">auto_fix_high</span>
+                    <h4 class="font-headline-md text-headline-md mt-4">智能纠错</h4>
+                    <p class="text-body-sm text-on-surface-variant">拼写、语法及逻辑的一站式自动化校对。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}

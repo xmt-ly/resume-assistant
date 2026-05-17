@@ -1,36 +1,181 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}简历助手{% endblock %}</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{% block title %}智汇简历助手{% endblock %}</title>
     <script src="/static/js/tailwind.min.js"></script>
-    <link rel="stylesheet" href="/static/css/app.css">
+    <link rel="stylesheet" href="/static/css/fonts.css"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00236f",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#1e3a8a",
+                        "on-primary-container": "#90a8ff",
+                        "inverse-primary": "#b6c4ff",
+                        "primary-fixed": "#dce1ff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "on-primary-fixed": "#00164e",
+                        "on-primary-fixed-variant": "#264191",
+                        "secondary": "#006a61",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#86f2e4",
+                        "on-secondary-container": "#006f66",
+                        "secondary-fixed": "#89f5e7",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "on-secondary-fixed": "#00201d",
+                        "on-secondary-fixed-variant": "#005049",
+                        "tertiary": "#37007e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#5200b5",
+                        "on-tertiary-container": "#bc9bff",
+                        "tertiary-fixed": "#eaddff",
+                        "tertiary-fixed-dim": "#d2bbff",
+                        "on-tertiary-fixed": "#25005a",
+                        "on-tertiary-fixed-variant": "#5a00c6",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "surface-dim": "#d8dadc",
+                        "surface-bright": "#f7f9fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container": "#eceef0",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-surface-variant": "#444651",
+                        "surface-variant": "#e0e3e5",
+                        "surface-tint": "#4059aa",
+                        "outline": "#757682",
+                        "outline-variant": "#c5c5d3",
+                        "background": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "inverse-surface": "#2d3133",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        gutter: "24px",
+                        "container-max": "1200px",
+                        unit: "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px"
+                    },
+                    fontFamily: {
+                        sans: ["Noto Sans SC", "Inter", "system-ui", "sans-serif"],
+                        "headline-lg": ["Noto Sans SC"],
+                        "headline-lg-mobile": ["Noto Sans SC"],
+                        "body-md": ["Noto Sans SC"],
+                        "headline-md": ["Noto Sans SC"],
+                        "label-md": ["Inter"],
+                        "body-sm": ["Noto Sans SC"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Noto Sans SC"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "1.2", fontWeight: "700" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "1.2", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "1.4", fontWeight: "600" }],
+                        "label-md": ["14px", { lineHeight: "1", fontWeight: "500" }],
+                        "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "label-sm": ["12px", { lineHeight: "1", fontWeight: "500" }],
+                        "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(0, 106, 97, 0.15);
+        }
+        .custom-dashed {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23C5C5D3FF' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 12px;
+        }
+        .paper-canvas {
+            aspect-ratio: 1 / 1.414;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/app.css"/>
     {% block head_extra %}{% endblock %}
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <nav class="bg-white border-b border-gray-200 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-14 items-center">
-                <a href="/" class="flex items-center gap-2">
-                    <span class="text-xl font-bold text-gray-800">简历助手</span>
-                    <span class="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded">Resume Assistant</span>
-                </a>
-                <div class="text-xs text-gray-400">
-                    {% if session_id %}
-                    <span>会话: {{ session_id[:8] }}...</span>
-                    {% endif %}
-                </div>
-            </div>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+    {% block navbar %}
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+        <a href="/" class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</a>
+        <div class="hidden md:flex gap-8 items-center h-full">
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="/job/input?method=text">制作简历</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="/analysis/0">技能分析</a>
+            <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">关于我们</a>
+        </div>
+        <div class="flex gap-4 items-center">
+            {% if user %}
+            <span class="text-body-sm text-on-surface-variant">{{ user.username }}</span>
+            <a href="/auth/logout" class="px-4 py-2 text-on-surface-variant font-medium hover:text-primary transition-all active:scale-95">退出</a>
+            {% else %}
+            <a href="/auth/register" class="px-4 py-2 text-on-surface-variant font-medium hover:text-primary transition-all active:scale-95">注册</a>
+            <a href="/auth/login" class="px-6 py-2 bg-primary text-on-primary rounded-lg font-medium hover:opacity-90 transition-all active:scale-95 shadow-sm">立即登录</a>
+            {% endif %}
         </div>
     </nav>
+    {% endblock %}
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Main Content Canvas -->
+    <main class="flex-grow">
         {% block content %}{% endblock %}
     </main>
 
-    <div id="toast" class="fixed top-4 right-4 z-50 hidden">
-        <div id="toastContent" class="px-4 py-3 rounded-lg shadow-lg text-white text-sm">消息</div>
+    {% block footer %}
+    <!-- Footer -->
+    <footer class="w-full py-12 px-margin-desktop flex flex-col items-center gap-6 bg-surface-container-lowest border-t border-outline-variant">
+        <div class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</div>
+        <div class="flex gap-8 flex-wrap justify-center">
+            <a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">服务条款</a>
+            <a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">隐私政策</a>
+            <a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">联系支持</a>
+            <a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">常见问题</a>
+        </div>
+        <div class="text-body-sm text-on-surface-variant">&copy; 2024 智汇简历助手 | 智能驱动 职场领先</div>
+    </footer>
+    {% endblock %}
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="fixed inset-0 z-[200] hidden">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+        <div class="relative flex items-center justify-center min-h-screen">
+            <div class="bg-surface-container-lowest rounded-2xl shadow-2xl p-8 flex flex-col items-center gap-4 max-w-xs mx-4">
+                <div class="w-14 h-14 rounded-full bg-secondary-container/30 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-secondary text-[32px] animate-spin"
+                          style="animation-duration: 1.5s;">progress_activity</span>
+                </div>
+                <p id="loadingText" class="text-body-md text-on-surface text-center font-medium">处理中，请稍候...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-20 right-4 z-[100] hidden">
+        <div id="toastContent" class="px-4 py-3 rounded-lg shadow-lg text-white text-sm"></div>
     </div>
 
     <script>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#264191",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#dce1ff",
+                    "on-tertiary-fixed": "#25005a",
+                    "tertiary-fixed-dim": "#d2bbff",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "surface-container-highest": "#e0e3e5",
+                    "outline-variant": "#c5c5d3",
+                    "primary-container": "#1e3a8a",
+                    "primary": "#00236f",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary-container": "#006f66",
+                    "error": "#ba1a1a",
+                    "surface": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "on-background": "#191c1e",
+                    "tertiary-container": "#5200b5",
+                    "on-surface-variant": "#444651",
+                    "surface-container": "#eceef0",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-primary": "#ffffff",
+                    "secondary": "#006a61",
+                    "on-surface": "#191c1e",
+                    "on-primary-fixed": "#00164e",
+                    "secondary-container": "#86f2e4",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#89f5e7",
+                    "on-tertiary-fixed-variant": "#5a00c6",
+                    "surface-bright": "#f7f9fb",
+                    "on-tertiary-container": "#bc9bff",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#eaddff",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "on-secondary-fixed": "#00201d",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-primary": "#b6c4ff",
+                    "surface-container-high": "#e6e8ea",
+                    "background": "#f7f9fb",
+                    "tertiary": "#37007e",
+                    "on-primary-container": "#90a8ff",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#757682",
+                    "surface-tint": "#4059aa"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "container-max": "1200px",
+                    "unit": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Noto Sans SC"],
+                    "headline-lg-mobile": ["Noto Sans SC"],
+                    "body-md": ["Noto Sans SC"],
+                    "headline-md": ["Noto Sans SC"],
+                    "label-md": ["Inter"],
+                    "body-sm": ["Noto Sans SC"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Noto Sans SC"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(0, 106, 97, 0.15);
+        }
+        .custom-dashed {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='12' ry='12' stroke='%23C5C5D3FF' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</div>
+<div class="hidden md:flex gap-8 items-center h-full">
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1 transition-colors" href="#">制作简历</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">技能分析</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">关于我们</a>
+</div>
+<div class="flex gap-4">
+<button class="px-4 py-2 text-on-surface-variant font-medium hover:text-primary transition-all active:scale-95">注册</button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-medium hover:opacity-90 transition-all active:scale-95 shadow-sm">立即登录</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-32 pb-16 px-margin-mobile md:px-0">
+<div class="max-w-[800px] mx-auto">
+<!-- Stepper Component -->
+<div class="mb-12">
+<div class="flex items-center justify-between relative">
+<!-- Progress Line Background -->
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-surface-container-highest -translate-y-1/2 z-0"></div>
+<!-- Step 1: Active -->
+<div class="relative z-10 flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-md">1</div>
+<span class="text-label-md font-bold text-primary">职位信息</span>
+</div>
+<!-- Step 2: Inactive -->
+<div class="relative z-10 flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">2</div>
+<span class="text-label-md text-on-surface-variant">我的简历</span>
+</div>
+<!-- Step 3: Inactive -->
+<div class="relative z-10 flex flex-col items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">3</div>
+<span class="text-label-md text-on-surface-variant">生成与分析</span>
+</div>
+</div>
+</div>
+<!-- Content Section -->
+<div class="bg-surface-container-lowest rounded-xl p-8 md:p-12 border border-outline-variant shadow-sm text-center">
+<header class="mb-10">
+<h1 class="font-headline-lg text-headline-lg text-on-background mb-4">第一步：上传职位截图</h1>
+<p class="text-on-surface-variant text-body-lg">
+                        上传你想投递的职位详情页截图，AI 将为您深度解析职位需求
+                    </p>
+</header>
+<!-- Drag & Drop Area -->
+<div class="custom-dashed p-12 mb-10 group cursor-pointer hover:bg-surface-container-low transition-colors flex flex-col items-center">
+<div class="w-20 h-20 bg-primary-fixed text-primary rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[40px]">add_photo_alternate</span>
+</div>
+<div class="space-y-2">
+<p class="font-headline-md text-headline-md text-on-surface">拖拽图片到此处，或 <span class="text-primary underline">点击上传</span></p>
+<p class="text-body-sm text-on-surface-variant">支持 PNG, JPG 格式，建议截图包含：职位描述、任职要求</p>
+</div>
+<!-- Decorative AI Insight Card Preview (Empty State Hint) -->
+<div class="mt-8 pt-8 border-t border-outline-variant w-full max-w-md">
+<div class="flex items-center gap-4 bg-secondary-container/20 p-4 rounded-lg border-l-4 border-secondary ai-glow">
+<span class="material-symbols-outlined text-secondary" data-weight="fill">auto_awesome</span>
+<p class="text-left text-body-sm text-on-secondary-container">
+<b>AI 提示：</b>清晰的截图能显著提高岗位匹配度分析的准确性。
+                            </p>
+</div>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="flex flex-col items-center gap-4">
+<button class="w-full md:w-auto min-w-[280px] py-4 px-8 bg-primary text-on-primary rounded-lg font-headline-md shadow-lg hover:shadow-xl hover:opacity-95 transition-all active:scale-95 flex items-center justify-center gap-2">
+                        下一步，提交我的简历
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-label-sm text-on-surface-variant">
+                        您的个人隐私受到严格保护，截图仅用于此次简历优化分析
+                    </p>
+</div>
+</div>
+<!-- Secondary Help Cards (Bento Style Hints) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+<div class="p-6 bg-surface-container-high rounded-xl border border-outline-variant flex gap-4">
+<div class="bg-surface-container-lowest p-3 rounded-lg h-fit border border-outline-variant">
+<span class="material-symbols-outlined text-primary">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-md text-body-lg font-bold mb-2">智能关键词提取</h3>
+<p class="text-body-sm text-on-surface-variant">自动识别 HR 关注的核心技能与工作经验，助您精准匹配。</p>
+</div>
+</div>
+<div class="p-6 bg-surface-container-high rounded-xl border border-outline-variant flex gap-4">
+<div class="bg-surface-container-lowest p-3 rounded-lg h-fit border border-outline-variant">
+<span class="material-symbols-outlined text-secondary">verified</span>
+</div>
+<div>
+<h3 class="font-headline-md text-body-lg font-bold mb-2">深度岗位洞察</h3>
+<p class="text-body-sm text-on-surface-variant">解析隐藏的招聘倾向，为您提供针对性的简历优化策略。</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-desktop flex flex-col items-center gap-6 bg-surface-container-lowest border-t border-outline-variant">
+<div class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</div>
+<div class="flex gap-8">
+<a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">服务条款</a>
+<a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">隐私政策</a>
+<a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">联系支持</a>
+<a class="text-body-sm text-on-surface-variant hover:text-secondary transition-all" href="#">常见问题</a>
+</div>
+<div class="text-body-sm text-on-surface-variant">© 2024 智汇简历助手 | 智能驱动 职场领先</div>
+</footer>
+</body></html>

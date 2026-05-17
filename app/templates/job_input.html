@@ -1,93 +1,165 @@
 {% extends "base.html" %}
-{% block title %}输入职位信息{% endblock %}
+
+{% block title %}输入职位信息 - 智汇简历助手{% endblock %}
+
 {% block content %}
-<div class="max-w-2xl mx-auto">
-    <div class="mb-8">
-        <a href="/" class="text-sm text-gray-400 hover:text-gray-600">&larr; 返回</a>
-        <h1 class="text-2xl font-bold text-gray-800 mt-2">
-            {% if method == 'text' %}粘贴招聘要求{% else %}上传招聘截图{% endif %}
-        </h1>
-        <p class="text-gray-500 text-sm mt-1">
-            {% if method == 'text' %}
-            从 Boss 直聘复制职位描述，粘贴到下方文本框中
-            {% else %}
-            截取 Boss 直聘 App 或网页中的招聘信息，上传截图
-            {% endif %}
-        </p>
+<main class="mt-16 min-h-[calc(100vh-64px-180px)] flex flex-col items-center py-12 px-margin-mobile md:px-margin-desktop bg-surface">
+    <!-- Progress Stepper -->
+    <div class="w-full max-w-3xl mb-12">
+        <div class="flex items-center justify-between relative">
+            <div class="absolute top-1/2 left-0 w-full h-0.5 bg-surface-container-highest -translate-y-1/2 z-0"></div>
+            <div class="relative z-10 flex flex-col items-center gap-2">
+                <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-md">1</div>
+                <span class="text-label-md font-label-md text-primary font-bold">职位信息</span>
+            </div>
+            <div class="relative z-10 flex flex-col items-center gap-2">
+                <div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">2</div>
+                <span class="text-label-md font-label-md text-on-surface-variant">我的简历</span>
+            </div>
+            <div class="relative z-10 flex flex-col items-center gap-2">
+                <div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">3</div>
+                <span class="text-label-md font-label-md text-on-surface-variant">生成与分析</span>
+            </div>
+        </div>
     </div>
 
-    <form id="jobForm"
-          action="/api/jobs" method="POST"
-          enctype="multipart/form-data"
-          class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+    {% if method == 'text' %}
+    <!-- Text Input Mode -->
+    <form action="/api/jobs" method="POST" enctype="multipart/form-data" id="jobForm" class="w-full max-w-3xl">
+        <input type="hidden" name="method" value="text">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 md:p-12 shadow-[0_4px_12px_rgba(0,0,0,0.03)]">
+            <header class="mb-8">
+                <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-on-surface mb-2">第一步：输入职位描述</h1>
+                <p class="text-on-surface-variant text-body-md">通过粘贴您心仪职位的详细描述，我们将为您进行精准的 AI 匹配与优化建议。</p>
+            </header>
+            <div class="space-y-6">
+                <div class="relative group">
+                    <label class="block text-label-md font-label-md text-on-surface-variant mb-2" for="jd-input">职位描述 (JD)</label>
+                    <textarea name="text" class="w-full p-6 rounded-lg border border-outline-variant bg-surface text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-outline resize-none" id="jd-input" placeholder="请粘贴您感兴趣的职位描述 (JD)...
 
-        <input type="hidden" name="method" value="{{ method }}">
-
-        {% if method == 'text' %}
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">招聘要求文本</label>
-            <textarea name="text" rows="12"
-                      class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-y"
-                      placeholder="请粘贴 Boss 直聘上的职位描述..."></textarea>
-        </div>
-        {% else %}
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">上传截图</label>
-            <div class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer"
-                 onclick="document.getElementById('screenshotInput').click()">
-                <div id="screenshotPlaceholder">
-                    <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                    </svg>
-                    <p class="text-gray-400 text-sm">点击或拖拽上传截图</p>
-                    <p class="text-gray-300 text-xs mt-1">支持 PNG、JPG，最大 10MB</p>
+提示：包含职位职责、任职要求及加分项的信息越详细，AI 的分析结果将越准确。" rows="12" required></textarea>
+                    <div class="absolute bottom-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary-container ai-glow">
+                        <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                        <span class="text-label-sm font-label-sm">AI 准备就绪</span>
+                    </div>
                 </div>
-                <div id="screenshotPreview" class="hidden relative">
-                    <img id="previewImg" class="max-h-80 mx-auto rounded-lg shadow-sm">
-                    <button type="button" onclick="clearScreenshot()"
-                            class="absolute top-2 right-2 bg-red-500 text-white w-7 h-7 rounded-full text-xs hover:bg-red-600">✕</button>
+                <div class="p-4 bg-surface-container-low border-l-4 border-secondary rounded-r-lg flex gap-4 items-start">
+                    <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+                    <div class="space-y-1">
+                        <p class="font-bold text-on-surface-variant text-body-sm">小贴士</p>
+                        <p class="text-on-surface-variant text-body-sm">粘贴文本后，我们的系统会自动提取关键词，如"精通 Java"、"有架构经验"等，并以此为您定制简历内容。</p>
+                    </div>
+                </div>
+                <div class="flex justify-end pt-4">
+                    <button type="submit" id="submitBtn" class="group flex items-center gap-3 bg-gradient-to-r from-secondary to-primary text-on-primary px-8 py-4 rounded-xl font-bold text-body-lg hover:shadow-lg active:scale-95 transition-all">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">colors_spark</span>
+                        下一步，提交我的简历
+                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+                    </button>
                 </div>
             </div>
-            <input type="file" name="screenshot" id="screenshotInput" accept="image/png,image/jpeg,image/jpg,image/webp"
-                   class="hidden"
-                   onchange="previewScreenshot(this)">
         </div>
-        {% endif %}
-
-        <button type="submit" id="submitBtn"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-xl transition-colors">
-            {% if method == 'text' %}开始分析{% else %}上传并分析{% endif %}
-        </button>
     </form>
 
-    <div id="loading" class="hidden mt-6 text-center py-10">
-        <div class="inline-block w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
-        <p class="text-gray-500 text-sm mt-3">正在分析招聘信息...</p>
-    </div>
-</div>
+    {% else %}
+    <!-- Screenshot Upload Mode -->
+    <form action="/api/jobs" method="POST" enctype="multipart/form-data" id="jobForm" class="w-full max-w-3xl">
+        <input type="hidden" name="method" value="screenshot">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 md:p-12 shadow-[0_4px_12px_rgba(0,0,0,0.03)]">
+            <header class="mb-8">
+                <h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg text-on-surface mb-2">第一步：上传职位截图</h1>
+                <p class="text-on-surface-variant text-body-md">上传一张招聘平台的职位详情截图，AI 将自动识别并提取关键信息。</p>
+            </header>
+            <div class="space-y-6">
+                <div id="dropZone" class="custom-dashed p-12 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container-low transition-colors relative">
+                    <input type="file" name="screenshot" id="screenshotInput" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    <div id="uploadPrompt" class="space-y-4">
+                        <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mx-auto">
+                            <span class="material-symbols-outlined text-3xl text-primary">cloud_upload</span>
+                        </div>
+                        <div>
+                            <p class="text-body-lg font-bold text-on-surface">点击或拖拽图片至此处</p>
+                            <p class="text-body-sm text-on-surface-variant mt-1">支持 PNG, JPG, WEBP 格式</p>
+                        </div>
+                    </div>
+                    <div id="previewContainer" class="hidden w-full">
+                        <img id="imagePreview" class="max-h-64 mx-auto rounded-lg shadow-md" alt="截图预览">
+                        <button type="button" onclick="clearScreenshot()" class="mt-4 text-body-sm text-error hover:underline">重新选择</button>
+                    </div>
+                </div>
+                <div class="p-4 bg-surface-container-low border-l-4 border-secondary rounded-r-lg flex gap-4 items-start">
+                    <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+                    <div class="space-y-1">
+                        <p class="font-bold text-on-surface-variant text-body-sm">智能识别提示</p>
+                        <p class="text-on-surface-variant text-body-sm">请确保截图清晰，包含职位名称、技能要求和职责描述。AI 会自动识别图片中的文字并提取关键信息。</p>
+                    </div>
+                </div>
+                <div class="flex justify-end pt-4">
+                    <button type="submit" id="submitBtn" class="group flex items-center gap-3 bg-gradient-to-r from-secondary to-primary text-on-primary px-8 py-4 rounded-xl font-bold text-body-lg hover:shadow-lg active:scale-95 transition-all">
+                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">colors_spark</span>
+                        下一步，提交我的简历
+                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% endif %}
 
+    <div class="fixed -bottom-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+    <div class="fixed -top-24 -right-24 w-96 h-96 bg-secondary/5 rounded-full blur-3xl -z-10"></div>
+</main>
+{% endblock %}
+
+{% block scripts %}
 <script>
 function previewScreenshot(input) {
-    var file = input.files && input.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        document.getElementById('screenshotPlaceholder').classList.add('hidden');
-        var preview = document.getElementById('screenshotPreview');
-        preview.classList.remove('hidden');
-        document.getElementById('previewImg').src = e.target.result;
-    };
-    reader.readAsDataURL(file);
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').src = e.target.result;
+            document.getElementById('uploadPrompt').classList.add('hidden');
+            document.getElementById('previewContainer').classList.remove('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
 }
+
 function clearScreenshot() {
     document.getElementById('screenshotInput').value = '';
-    document.getElementById('screenshotPreview').classList.add('hidden');
-    document.getElementById('screenshotPlaceholder').classList.remove('hidden');
+    document.getElementById('uploadPrompt').classList.remove('hidden');
+    document.getElementById('previewContainer').classList.add('hidden');
 }
-document.getElementById('jobForm').addEventListener('submit', function() {
-    document.getElementById('submitBtn').disabled = true;
-    document.getElementById('submitBtn').classList.add('opacity-50');
-    document.getElementById('loading').classList.remove('hidden');
+
+document.getElementById('screenshotInput')?.addEventListener('change', function() {
+    previewScreenshot(this);
+});
+
+var dropZone = document.getElementById('dropZone');
+if (dropZone) {
+    ['dragenter', 'dragover'].forEach(function(evt) {
+        dropZone.addEventListener(evt, function(e) {
+            e.preventDefault();
+            dropZone.classList.add('bg-surface-container-low');
+        });
+    });
+    ['dragleave', 'drop'].forEach(function(evt) {
+        dropZone.addEventListener(evt, function(e) {
+            e.preventDefault();
+            dropZone.classList.remove('bg-surface-container-low');
+        });
+    });
+    dropZone.addEventListener('drop', function(e) {
+        var files = e.dataTransfer.files;
+        if (files.length > 0) {
+            document.getElementById('screenshotInput').files = files;
+            previewScreenshot(document.getElementById('screenshotInput'));
+        }
+    });
+}
+
+document.getElementById('jobForm')?.addEventListener('submit', function() {
+    window.showLoading('AI 正在分析职位信息...');
 });
 </script>
 {% endblock %}

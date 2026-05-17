@@ -1,114 +1,191 @@
 {% extends "base.html" %}
-{% block title %}提交简历{% endblock %}
+{% block title %}提供简历背景 - 智汇简历助手{% endblock %}
+
 {% block content %}
-<div class="max-w-2xl mx-auto">
-    <div class="mb-8">
-        <a href="/job/input?method=text" class="text-sm text-gray-400 hover:text-gray-600">&larr; 重新选择职位</a>
-        <h1 class="text-2xl font-bold text-gray-800 mt-2">提交简历</h1>
-    </div>
+<main class="pt-24 pb-20 px-margin-mobile md:px-margin-desktop container-max mx-auto">
+    <!-- Header & Stepper -->
+    <header class="text-center mb-12">
+        <h1 class="font-headline-lg text-headline-lg text-primary mb-8">第二步：提供您的简历背景</h1>
+        <div class="flex items-center justify-center max-w-2xl mx-auto">
+            <div class="flex flex-col items-center flex-1">
+                <div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-2">
+                    <span class="material-symbols-outlined">check</span>
+                </div>
+                <span class="font-label-md text-label-md text-on-surface-variant">1. 职位信息</span>
+            </div>
+            <div class="h-px bg-outline-variant flex-1 -mt-6"></div>
+            <div class="flex flex-col items-center flex-1">
+                <div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center mb-2 ring-4 ring-primary/10">
+                    <span class="font-label-md text-label-md">2</span>
+                </div>
+                <span class="font-label-md text-label-md text-primary font-bold">2. 我的简历</span>
+            </div>
+            <div class="h-px bg-outline-variant flex-1 -mt-6"></div>
+            <div class="flex flex-col items-center flex-1">
+                <div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center mb-2">
+                    <span class="font-label-md text-label-md">3</span>
+                </div>
+                <span class="font-label-md text-label-md text-on-surface-variant">3. 生成与分析</span>
+            </div>
+        </div>
+    </header>
 
-    {% if job %}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mb-6">
-        <div class="flex items-start justify-between">
+    <!-- Job Info Summary -->
+    <div class="max-w-4xl mx-auto mb-8 p-4 bg-surface-container-low rounded-xl border border-outline-variant">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">work</span>
             <div>
-                <h2 class="text-lg font-semibold text-gray-800">{{ job.position or "职位" }}</h2>
-                <p class="text-sm text-gray-500">
-                    {% if job.company_name %}{{ job.company_name }} · {% endif %}
-                    {% if job.salary_range %}{{ job.salary_range }}{% endif %}
-                </p>
+                <span class="font-bold text-on-surface">{{ job.position or '职位' }}</span>
+                {% if job.company_name %}
+                <span class="text-on-surface-variant ml-2">{{ job.company_name }}</span>
+                {% endif %}
+                {% if job.salary_range %}
+                <span class="text-secondary ml-2">{{ job.salary_range }}</span>
+                {% endif %}
             </div>
-            <span class="text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded-full">
-                {% if job.source_type == 'text' %}文本输入{% else %}截图识别{% endif %}
-            </span>
         </div>
     </div>
-    {% endif %}
 
-    <form id="resumeForm"
-          action="/api/resumes" method="POST"
-          enctype="multipart/form-data"
-          class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6">
+    <!-- Main Content Grid -->
+    <form action="/api/resumes" method="POST" enctype="multipart/form-data" id="resumeForm" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-4xl mx-auto">
+        <input type="hidden" name="job_id" value="{{ job.id }}">
+        <input type="hidden" name="source_type" id="sourceType" value="generate">
 
-        <input type="hidden" name="job_id" value="{{ job.id if job else '' }}">
+        <!-- Left Side: Choices -->
+        <div class="lg:col-span-5 space-y-6">
+            <!-- Choice 1: Upload -->
+            <div id="uploadCard" class="bg-surface-container-lowest border border-outline-variant p-6 rounded-xl hover:border-primary transition-all cursor-pointer group" onclick="selectMode('upload')">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-surface-container rounded-lg text-primary group-hover:bg-primary-fixed group-hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl">upload_file</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">上传已有简历</h3>
+                        <p class="font-body-sm text-body-sm text-on-surface-variant mb-4">我们将基于现有简历进行优化，保留核心竞争力，提升文案表达。</p>
+                        <div id="fileInputWrapper" class="hidden">
+                            <input type="file" name="resume_file" id="resumeFile" accept=".pdf,.docx,.doc,.txt" class="block w-full text-body-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-label-md file:bg-primary file:text-on-primary hover:file:opacity-90 cursor-pointer">
+                            <p id="fileName" class="text-body-sm text-secondary mt-2 hidden"></p>
+                        </div>
+                        <button type="button" id="selectFileBtn" class="w-full flex items-center justify-center gap-2 border border-outline text-on-surface-variant px-4 py-3 rounded-lg hover:bg-surface-container-low transition-colors font-label-md">
+                            <span class="material-symbols-outlined">add</span> 选择文件
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-3">选择方式</label>
-            <div class="grid grid-cols-2 gap-3" id="modeSelector">
-                <label class="border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-gray-300 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50"
-                       for="modeUpload">
-                    <input type="radio" name="source_type" id="modeUpload" value="upload" checked
-                           class="hidden"
-                           onchange="document.getElementById('uploadSection').classList.remove('hidden'); document.getElementById('generateSection').classList.add('hidden')">
-                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400 has-[:checked]:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                    </svg>
-                    <p class="text-xs font-medium text-gray-500">上传已有简历</p>
-                </label>
-                <label class="border-2 border-gray-200 rounded-xl p-4 text-center cursor-pointer transition-all hover:border-gray-300 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50"
-                       for="modeGenerate">
-                    <input type="radio" name="source_type" id="modeGenerate" value="generate"
-                           class="hidden"
-                           onchange="document.getElementById('generateSection').classList.remove('hidden'); document.getElementById('uploadSection').classList.add('hidden')">
-                    <svg class="w-6 h-6 mx-auto mb-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
-                    <p class="text-xs font-medium text-gray-500">AI 从零生成</p>
-                </label>
+            <!-- Choice 2: AI Generation (Default Active) -->
+            <div id="generateCard" class="bg-surface-container-lowest border-2 border-primary ai-glow p-6 rounded-xl cursor-pointer" onclick="selectMode('generate')">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-primary text-on-primary rounded-lg">
+                        <span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">AI 从零生成</h3>
+                        <p class="font-body-sm text-body-sm text-on-surface-variant">没有简历？AI 帮您从头构建。通过简单的背景描述，由智能模型协助您生成专业简历。</p>
+                    </div>
+                    <div class="text-primary" id="generateCheck">
+                        <span class="material-symbols-outlined">check_circle</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decorative Banner -->
+            <div class="rounded-xl overflow-hidden bg-primary-container h-48 relative">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent"></div>
+                <div class="absolute inset-0 p-6 flex flex-col justify-end text-on-primary">
+                    <span class="font-headline-md text-headline-md font-bold mb-1">智能分析引擎</span>
+                    <p class="font-body-sm text-body-sm opacity-80">已有 50,000+ 用户通过 AI 生成获得了心仪 Offer</p>
+                </div>
             </div>
         </div>
 
-        <div id="uploadSection">
-            <label class="block text-sm font-medium text-gray-700 mb-2">上传简历文件</label>
-            <div class="border-2 border-dashed border-gray-200 rounded-xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer"
-                 onclick="document.getElementById('fileInput').click()">
-                <div id="filePlaceholder">
-                    <svg class="w-10 h-10 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-                    </svg>
-                    <p class="text-gray-400 text-sm">点击或拖拽上传简历</p>
-                    <p class="text-gray-300 text-xs mt-1">支持 PDF、DOCX、TXT</p>
+        <!-- Right Side: Form -->
+        <div class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 ai-glow relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 blur-3xl rounded-full -mr-16 -mt-16"></div>
+            <div class="flex items-center gap-3 mb-8">
+                <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">colors_spark</span>
+                <h2 class="font-headline-md text-headline-md text-on-surface">填写背景信息</h2>
+            </div>
+            <div class="space-y-6">
+                <div>
+                    <label class="block font-label-md text-label-md text-on-surface-variant mb-2">目标岗位</label>
+                    <input name="background_position" class="w-full bg-surface-container-low border-outline-variant border rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-body-md" placeholder="例如：高级前端开发工程师" type="text" value="{{ job.position or '' }}">
                 </div>
-                <div id="fileSelected" class="hidden items-center justify-center gap-2">
-                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span id="fileNameDisplay" class="text-gray-600 text-sm"></span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block font-label-md text-label-md text-on-surface-variant mb-2">教育背景</label>
+                        <input name="background_education" class="w-full bg-surface-container-low border-outline-variant border rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-body-md" placeholder="学校、专业、学历" type="text">
+                    </div>
+                    <div>
+                        <label class="block font-label-md text-label-md text-on-surface-variant mb-2">核心技能</label>
+                        <input name="background_skills" class="w-full bg-surface-container-low border-outline-variant border rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-body-md" placeholder="关键词如：Python, PM, 英语流利" type="text">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-label-md text-label-md text-on-surface-variant mb-2">工作/项目经验简述</label>
+                    <textarea name="background" class="w-full bg-surface-container-low border-outline-variant border rounded-lg px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary transition-all text-body-md resize-none" placeholder="请简单描述您的工作职责、成就或项目经历，AI 将以此为基础自动扩充并优化文案..." rows="6"></textarea>
+                </div>
+                <div class="flex items-start gap-3 p-4 bg-secondary-container/20 rounded-lg border-l-4 border-secondary">
+                    <span class="material-symbols-outlined text-secondary text-xl">lightbulb</span>
+                    <p class="font-body-sm text-body-sm text-on-secondary-container">
+                        <strong>AI 建议：</strong>提供具体的项目数据（如：效率提升 30%）能显著提高简历的吸引力。
+                    </p>
+                </div>
+                <div class="pt-4 flex justify-end gap-4">
+                    <a href="/job/input?method=text" class="px-6 py-3 rounded-lg border border-outline text-on-surface-variant font-label-md hover:bg-surface-container-low transition-all">上一步</a>
+                    <button type="submit" id="submitBtn" class="flex items-center gap-2 px-10 py-3 rounded-lg bg-gradient-to-r from-secondary to-primary text-on-primary font-label-md text-label-md shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                        <span class="material-symbols-outlined text-sm">auto_awesome</span>
+                        开始智能生成
+                    </button>
                 </div>
             </div>
-            <input type="file" name="resume_file" id="fileInput" accept=".pdf,.docx,.txt"
-                   class="hidden"
-                   onchange="var name=this.files[0]&&this.files[0].name;if(name){document.getElementById('filePlaceholder').classList.add('hidden');var sel=document.getElementById('fileSelected');sel.classList.remove('hidden');sel.classList.add('flex');document.getElementById('fileNameDisplay').textContent=name}">
         </div>
-
-        <div id="generateSection" class="hidden">
-            <label class="block text-sm font-medium text-gray-700 mb-2">填写你的背景信息</label>
-            <textarea name="background" rows="8"
-                      class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-y"
-                      placeholder="请简要描述你的工作背景，例如：&#10;1. 工作年限和当前职位&#10;2. 掌握的核心技能（编程语言、工具、框架等）&#10;3. 教育背景&#10;4. 主要项目经历或工作成就&#10;5. 目标薪资期望（可选）"></textarea>
-        </div>
-
-        <button type="submit" id="submitBtn"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-xl transition-colors">
-            开始处理
-        </button>
     </form>
+</main>
+{% endblock %}
 
-    <!-- 加载弹窗 -->
-    <div id="loadingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-        <div class="relative bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 text-center">
-            <div class="inline-block w-10 h-10 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin mb-4"></div>
-            <p class="text-gray-700 font-medium">AI 正在为你优化简历</p>
-            <p class="text-gray-400 text-sm mt-1">请耐心等待，这可能需要一些时间...</p>
-        </div>
-    </div>
-</div>
-
+{% block scripts %}
 <script>
-document.getElementById('resumeForm').addEventListener('submit', function() {
-    document.getElementById('submitBtn').disabled = true;
-    document.getElementById('submitBtn').classList.add('opacity-50');
-    document.getElementById('loadingModal').classList.remove('hidden');
+function selectMode(mode) {
+    var uploadCard = document.getElementById('uploadCard');
+    var generateCard = document.getElementById('generateCard');
+    var sourceType = document.getElementById('sourceType');
+    var fileInputWrapper = document.getElementById('fileInputWrapper');
+    var selectFileBtn = document.getElementById('selectFileBtn');
+    var generateCheck = document.getElementById('generateCheck');
+
+    if (mode === 'upload') {
+        uploadCard.className = uploadCard.className.replace('border-outline-variant', 'border-2 border-primary').replace('hover:border-primary', '');
+        uploadCard.classList.add('ai-glow');
+        generateCard.className = generateCard.className.replace('border-2 border-primary', 'border-outline-variant').replace('ai-glow', '');
+        generateCheck.classList.add('hidden');
+        sourceType.value = 'upload';
+        fileInputWrapper.classList.remove('hidden');
+        selectFileBtn.classList.add('hidden');
+    } else {
+        generateCard.className = generateCard.className.replace('border-outline-variant', 'border-2 border-primary');
+        generateCard.classList.add('ai-glow');
+        uploadCard.className = uploadCard.className.replace('border-2 border-primary', 'border-outline-variant').replace('ai-glow', '');
+        generateCheck.classList.remove('hidden');
+        sourceType.value = 'generate';
+        fileInputWrapper.classList.add('hidden');
+        selectFileBtn.classList.remove('hidden');
+    }
+}
+
+document.getElementById('selectFileBtn')?.addEventListener('click', function() {
+    document.getElementById('resumeFile')?.click();
+});
+
+document.getElementById('resumeFile')?.addEventListener('change', function() {
+    if (this.files.length > 0) {
+        document.getElementById('fileName').textContent = this.files[0].name;
+        document.getElementById('fileName').classList.remove('hidden');
+    }
+});
+
+document.getElementById('resumeForm')?.addEventListener('submit', function() {
+    window.showLoading('AI 正在生成您的简历...');
 });
 </script>
 {% endblock %}

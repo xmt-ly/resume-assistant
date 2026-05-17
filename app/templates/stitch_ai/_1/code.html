@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>智汇简历助手 - 简历生成与分析</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#264191",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#dce1ff",
+                        "on-tertiary-fixed": "#25005a",
+                        "tertiary-fixed-dim": "#d2bbff",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#c5c5d3",
+                        "primary-container": "#1e3a8a",
+                        "primary": "#00236f",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary-container": "#006f66",
+                        "error": "#ba1a1a",
+                        "surface": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "on-background": "#191c1e",
+                        "tertiary-container": "#5200b5",
+                        "on-surface-variant": "#444651",
+                        "surface-container": "#eceef0",
+                        "on-secondary-fixed-variant": "#005049",
+                        "on-primary": "#ffffff",
+                        "secondary": "#006a61",
+                        "on-surface": "#191c1e",
+                        "on-primary-fixed": "#00164e",
+                        "secondary-container": "#86f2e4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#89f5e7",
+                        "on-tertiary-fixed-variant": "#5a00c6",
+                        "surface-bright": "#f7f9fb",
+                        "on-tertiary-container": "#bc9bff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#eaddff",
+                        "secondary-fixed-dim": "#6bd8cb",
+                        "on-secondary-fixed": "#00201d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "inverse-primary": "#b6c4ff",
+                        "surface-container-high": "#e6e8ea",
+                        "background": "#f7f9fb",
+                        "tertiary": "#37007e",
+                        "on-primary-container": "#90a8ff",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#757682",
+                        "surface-tint": "#4059aa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-max": "1200px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Noto Sans SC"],
+                        "headline-lg-mobile": ["Noto Sans SC"],
+                        "body-md": ["Noto Sans SC"],
+                        "headline-md": ["Noto Sans SC"],
+                        "label-md": ["Inter"],
+                        "body-sm": ["Noto Sans SC"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Noto Sans SC"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .resume-canvas {
+            aspect-ratio: 1 / 1.414;
+            width: 100%;
+            max-width: 800px;
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(0, 106, 97, 0.1);
+        }
+        body {
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="#">制作简历</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">技能分析</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">关于我们</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 text-primary font-body-md transition-all active:scale-95">立即登录</button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-body-md transition-all hover:opacity-90 active:scale-95">注册</button>
+</div>
+</header>
+<main class="pt-24 pb-12 px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Progress Stepper -->
+<div class="mb-10 max-w-3xl mx-auto">
+<div class="flex items-center justify-between relative">
+<!-- Connector Line -->
+<div class="absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant -z-10 -translate-y-1/2"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold">1</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">职位信息</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold">2</div>
+<span class="text-body-sm font-body-sm text-on-surface-variant">我的简历</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold shadow-lg ring-4 ring-primary-fixed">3</div>
+<span class="text-body-sm font-body-sm font-bold text-primary">生成与分析</span>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary">简历预览与 AI 优化</h1>
+<p class="text-on-surface-variant text-body-md mt-1">基于您的目标职位，AI 已完成首轮简历优化建议。</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 border border-outline text-on-surface rounded-lg hover:bg-surface-container transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+<span class="text-label-md">重新生成</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 border border-outline text-on-surface rounded-lg hover:bg-surface-container transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+<span class="text-label-md">在线编辑</span>
+</button>
+<button class="flex items-center gap-2 px-6 py-2.5 bg-primary text-on-primary rounded-lg shadow-md hover:bg-primary-container transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="text-label-md">下载 PDF</span>
+</button>
+</div>
+</div>
+<!-- Split View Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Sidebar: AI Optimization Suggestions -->
+<aside class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 shadow-sm ai-glow">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">AI 优化建议</h2>
+</div>
+<div class="space-y-4">
+<!-- Suggestion Card 1 -->
+<div class="p-4 border-l-4 border-secondary bg-secondary-container/20 rounded-r-lg">
+<h3 class="font-bold text-secondary text-body-md mb-1">强化了分布式系统经验</h3>
+<p class="text-on-surface-variant text-body-sm">针对您的求职意向，AI 已自动提炼并重构了您在以往项目中的架构设计描述，突出了高并发处理能力。</p>
+<button class="mt-3 text-secondary text-label-md font-bold flex items-center gap-1 hover:underline">
+                                查看具体改动 <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- Suggestion Card 2 -->
+<div class="p-4 border-l-4 border-secondary bg-secondary-container/20 rounded-r-lg">
+<h3 class="font-bold text-secondary text-body-md mb-1">量化了项目成果</h3>
+<p class="text-on-surface-variant text-body-sm">将“优化了系统性能”细化为“通过缓存优化将 API 响应时间降低了 45%，并支持了 20% 的用户增长”。</p>
+<button class="mt-3 text-secondary text-label-md font-bold flex items-center gap-1 hover:underline">
+                                查看具体改动 <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- Suggestion Card 3 -->
+<div class="p-4 border-l-4 border-outline bg-surface-container-low rounded-r-lg">
+<h3 class="font-bold text-on-surface text-body-md mb-1">关键词匹配提醒</h3>
+<p class="text-on-surface-variant text-body-sm">检测到职位描述中的“云原生”和“Kubernetes”在简历中提及较少，建议在技能清单中适当添加。</p>
+<button class="mt-3 px-4 py-1.5 bg-secondary text-on-secondary rounded-full text-label-sm font-bold active:scale-95">一键补全</button>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant">
+<div class="flex justify-between items-center mb-2">
+<span class="text-body-sm font-bold text-on-surface">简历匹配得分</span>
+<span class="text-headline-md font-bold text-secondary">92</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[92%]"></div>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-3 text-center">您的简历与“高级后端工程师”职位高度契合</p>
+</div>
+</div>
+<!-- AI Data Insight -->
+<div class="bg-primary-container p-6 rounded-xl text-on-primary-container shadow-lg">
+<h3 class="font-bold text-body-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined">insights</span>
+                        行业竞争力分析
+                    </h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-body-sm">
+<span>技术深度</span>
+<span class="bg-on-primary-container text-primary-container px-2 py-0.5 rounded text-[10px] font-bold">TOP 5%</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span>管理潜力</span>
+<span class="bg-on-primary-container text-primary-container px-2 py-0.5 rounded text-[10px] font-bold">TOP 15%</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span>行业背景</span>
+<span class="bg-on-primary-container text-primary-container px-2 py-0.5 rounded text-[10px] font-bold">TOP 10%</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Right Main: Resume Preview (A4 style) -->
+<section class="lg:col-span-8 flex justify-center">
+<div class="resume-canvas bg-surface-container-lowest shadow-2xl rounded-sm p-[10%] relative overflow-hidden border border-outline-variant">
+<!-- Resume Watermark/Badge -->
+<div class="absolute top-8 right-8 rotate-12 opacity-10 pointer-events-none select-none">
+<span class="text-[40px] font-bold text-primary border-4 border-primary p-2">AI OPTIMIZED</span>
+</div>
+<!-- Resume Content Preview -->
+<div class="resume-content space-y-8 text-[#1a1a1a]">
+<!-- Header -->
+<div class="text-center border-b-2 border-primary pb-6">
+<h2 class="text-[28px] font-bold tracking-widest mb-2">张智汇</h2>
+<div class="flex justify-center gap-4 text-sm text-gray-600">
+<span>138-0000-0000</span>
+<span>|</span>
+<span>zhang.zhihu@example.com</span>
+<span>|</span>
+<span>上海市</span>
+</div>
+</div>
+<!-- Summary -->
+<section>
+<h3 class="text-lg font-bold text-primary mb-3 border-l-4 border-primary pl-3">个人总结</h3>
+<p class="text-sm leading-relaxed text-gray-700">
+                                拥有 8 年后端开发经验的资深工程师，专注于高并发、分布式系统架构设计。精通 Java 生态系统，对 JVM 调优、数据库性能优化有深刻理解。具备跨团队协作与敏捷开发经验，能够快速响应业务需求并提供高质量的技术方案。
+                            </p>
+</section>
+<!-- Experience -->
+<section>
+<h3 class="text-lg font-bold text-primary mb-4 border-l-4 border-primary pl-3">工作经历</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between font-bold text-sm mb-1">
+<span>某头部科技公司 - 高级后端工程师</span>
+<span>2019.03 - 至今</span>
+</div>
+<ul class="list-disc list-inside text-sm text-gray-700 space-y-1 ml-2">
+<li>主导了电商核心订单系统的重构，采用微服务架构，支撑了双十一期间 50k QPS 的峰值压力。</li>
+<li>通过引入多级缓存策略和消息队列异步处理，将下单接口平均延迟从 300ms 降低至 80ms。</li>
+<li>负责技术团队的 Code Review，建立并推广了统一的代码质量规范，降低了 30% 的线上故障率。</li>
+</ul>
+</div>
+<div>
+<div class="flex justify-between font-bold text-sm mb-1">
+<span>XX 互联网金融平台 - 中级开发工程师</span>
+<span>2016.07 - 2019.02</span>
+</div>
+<ul class="list-disc list-inside text-sm text-gray-700 space-y-1 ml-2">
+<li>参与了支付网关的设计与实现，确保了资金流转的安全性与一致性。</li>
+<li>负责监控系统的开发，实现了全链路跟踪，大幅提升了线上问题的定位效率。</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Education -->
+<section>
+<h3 class="text-lg font-bold text-primary mb-3 border-l-4 border-primary pl-3">教育背景</h3>
+<div class="flex justify-between font-bold text-sm">
+<span>上海交通大学 - 计算机科学与技术 (硕士)</span>
+<span>2014.09 - 2016.06</span>
+</div>
+</section>
+<!-- Skills -->
+<section>
+<h3 class="text-lg font-bold text-primary mb-3 border-l-4 border-primary pl-3">专业技能</h3>
+<div class="flex flex-wrap gap-2 text-sm">
+<span class="bg-gray-100 px-3 py-1 rounded-full text-gray-700">Java / Spring Boot</span>
+<span class="bg-gray-100 px-3 py-1 rounded-full text-gray-700">MySQL / Redis</span>
+<span class="bg-gray-100 px-3 py-1 rounded-full text-gray-700">Kafka / RabbitMQ</span>
+<span class="bg-gray-100 px-3 py-1 rounded-full text-gray-700">Kubernetes / Docker</span>
+<span class="bg-gray-100 px-3 py-1 rounded-full text-gray-700">分布式架构设计</span>
+</div>
+</section>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-desktop flex flex-col items-center gap-6 bg-surface-container-lowest border-t border-outline-variant mt-12">
+<span class="font-headline-md text-headline-md font-bold text-primary">智汇简历助手</span>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-on-surface-variant hover:text-secondary transition-all font-body-sm text-body-sm" href="#">服务条款</a>
+<a class="text-on-surface-variant hover:text-secondary transition-all font-body-sm text-body-sm" href="#">隐私政策</a>
+<a class="text-on-surface-variant hover:text-secondary transition-all font-body-sm text-body-sm" href="#">联系支持</a>
+<a class="text-on-surface-variant hover:text-secondary transition-all font-body-sm text-body-sm" href="#">常见问题</a>
+</div>
+<p class="text-on-surface-variant font-body-sm text-body-sm">© 2024 智汇简历助手 | 智能驱动 职场领先</p>
+</footer>
+</body></html>
